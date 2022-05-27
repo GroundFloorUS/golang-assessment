@@ -1,0 +1,14 @@
+# Editor files
+.idea/
+*.iml
+*.swp
+.vscode/
+
+*.zip
+
+.DS_Store
+
+# direnv
+.envrc
+tmp/builds/*
+!tmp/builds/.keep
