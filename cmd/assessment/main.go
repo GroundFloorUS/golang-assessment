@@ -1,6 +1,8 @@
 package main
 
-import "golang-assessment/bank"
+import (
+	"github.com/GroundFloorUS/golang-assessment/bank"
+)
 
 /*
 	Challenge:

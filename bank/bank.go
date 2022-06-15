@@ -17,7 +17,7 @@ func (a *Account) Deposit(amount int) int {
 }
 
 func (a *Account) Withdraw(amount int) int {
-	if a.Balance > amount {
+	if a.Balance >= amount {
 		a.Balance = a.Balance - amount
 	}
 	return a.Balance
