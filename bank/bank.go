@@ -6,6 +6,7 @@ type Account struct {
 	Balance int
 }
 
+//ConnectToGroundFloor makes a http GET request to Groundfloor's homepage to provide latency
 func ConnectToGroundFloor() error {
 	_, err := http.Get("https://groundfloor.us/")
 	return err

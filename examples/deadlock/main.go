@@ -26,6 +26,7 @@ func PrintSum(wg *sync.WaitGroup, v1, v2 *Value) {
 	defer wg.Done()
 	v1.Mu.Lock()
 	defer v1.Mu.Unlock()
+	//Get request is to provide latency for PrintSum
 	_, err := http.Get("https://jsonplaceholder.typicode.com/posts/1")
 	if err != nil {
 		log.Fatalln(err)
