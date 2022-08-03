@@ -2,9 +2,8 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"net/http"
 	"sync"
+	"time"
 )
 
 type Value struct {
@@ -22,27 +21,27 @@ func New(v int, name string) *Value {
 	return &value
 }
 
-func PrintSum(wg *sync.WaitGroup, v1, v2 *Value) {
+func IncrementAndSwapValues(wg *sync.WaitGroup, v1, v2 *Value) {
 	defer wg.Done()
 	v1.Mu.Lock()
 	defer v1.Mu.Unlock()
-	//Get request is to provide latency for PrintSum
-	_, err := http.Get("https://jsonplaceholder.typicode.com/posts/1")
-	if err != nil {
-		log.Fatalln(err)
-	}
+	time.Sleep(time.Second)
 	v2.Mu.Lock()
 	defer v2.Mu.Unlock()
-
-	fmt.Printf("sum=%v\n", v1.Value+v2.Value)
+	value1 := v1.Value + 1
+	value2 := v2.Value + 1
+	v1.Value = value2
+	v2.Value = value1
 }
 
 func main() {
 	var wg sync.WaitGroup
-	a := New(0, "a")
-	b := New(0, "b")
+	a := New(1, "a")
+	b := New(2, "b")
 	wg.Add(2)
-	go PrintSum(&wg, a, b)
-	go PrintSum(&wg, b, a)
+	go IncrementAndSwapValues(&wg, a, b)
+	go IncrementAndSwapValues(&wg, b, a)
 	wg.Wait()
+	fmt.Println("New Value for a:\t", a.Value)
+	fmt.Println("New Value for b:\t", b.Value)
 }
